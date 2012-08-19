@@ -6,6 +6,8 @@ else
   DMENU='dmenu -i'
 fi
 
+format="%artist% - %album% - %track% %title%"
+
 addaftercurrent(){
 	
 	#playlist is empty, just add the song
@@ -161,7 +163,7 @@ case $1 in
 
 	-j|--jump)
 	
-	TITLE=$(mpc playlist | $DMENU -p jump:);
+	TITLE=$(mpc playlist -f "$format" | $DMENU -p jump:);
 	if [ "$TITLE" = "" ]; then exit; fi
 	POS=$(mpc playlist | grep -n "$TITLE" | awk -F: '{print $1}')
 	mpc play $POS;
@@ -228,9 +230,9 @@ case $1 in
 
 	-h|--help)
 	echo -e "-a, --artist		search for artist, then album, then title"
-    echo -e "-t, --track		search for a single track in the whole database"
+     echo -e "-t, --track		search for a single track in the whole database"
 	echo -e "-p, --playlist		search for a playlist load it"
-	echo -e "-j, --jump		jump to another song in the current playlist"		 
+	echo -e "-j, --jump			jump to another song in the current playlist"		 
 	echo -e "-l, --longplayer	search for album, then title"
 	
 	
